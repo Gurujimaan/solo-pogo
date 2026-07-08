@@ -24,11 +24,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public float rotRightInput;
     [HideInInspector] public bool jumpInput;
 
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
