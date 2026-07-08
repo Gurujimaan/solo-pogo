@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     public Rigidbody rb;
     public PlayerInput playerInput;
+    public Spring spring;
 
     [Header("Movement Settings")]
     public float baseJumpPower;
