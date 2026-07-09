@@ -7,9 +7,6 @@ public class Head : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision");
-
-
         if (collision.gameObject.CompareTag("Floor"))
         {
             ContactPoint contact = collision.contacts[0];
@@ -17,10 +14,8 @@ public class Head : MonoBehaviour
             bounceDirection.z = 0f;
             bounceDirection.Normalize();
 
-            playerController.rb.AddForce(bounceDirection * 100, ForceMode.Impulse);
+            playerController.rb.AddForce(bounceDirection * 2, ForceMode.Impulse);
             Debug.Log("Bounce applied to player!");
         }
     }
-
-
 }

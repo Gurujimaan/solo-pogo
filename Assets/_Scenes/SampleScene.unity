@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 314185785}
   - component: {fileID: 314185787}
   - component: {fileID: 314185786}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -310,7 +310,7 @@ MonoBehaviour:
   rb: {fileID: 314185785}
   playerInput: {fileID: 314185787}
   spring: {fileID: 1432222494}
-  baseJumpPower: 7
+  baseJumpPower: 6
   rotSpeed: 200
   rotLeftInput: 0
   rotRightInput: 0
@@ -1039,7 +1039,7 @@ GameObject:
   - component: {fileID: 1432222493}
   - component: {fileID: 1432222492}
   - component: {fileID: 1432222494}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1074,7 +1074,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -1258,8 +1258,8 @@ Transform:
   m_GameObject: {fileID: 1641639482}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.7834316, w: 0.62147814}
-  m_LocalPosition: {x: 6.54, y: 1.05, z: 0}
-  m_LocalScale: {x: 1.53, y: 1, z: 1}
+  m_LocalPosition: {x: 6.473, y: 0.974, z: 0}
+  m_LocalScale: {x: 1.53, y: 0.5304, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1274,10 +1274,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1697637241}
   - component: {fileID: 1697637244}
+  - component: {fileID: 1697637246}
   - component: {fileID: 1697637243}
   - component: {fileID: 1697637242}
   - component: {fileID: 1697637245}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1390,6 +1391,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Head
   playerController: {fileID: 314185786}
+--- !u!54 &1697637246
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697637240}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1847334950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,7 +1430,7 @@ GameObject:
   - component: {fileID: 1847334954}
   - component: {fileID: 1847334953}
   - component: {fileID: 1847334952}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1439,11 +1467,11 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.4
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
