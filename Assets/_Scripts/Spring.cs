@@ -4,29 +4,80 @@ using UnityEngine;
 public class Spring : MonoBehaviour
 {
     [Header("References")]
-    public PlayerController playerController;
+    public Rigidbody rb;
+    public PlayerController controller;
+    public Transform pogoTipOrigin; 
 
-    private GameObject floor;
+    [Header("Bounce Settings")]
+    public float rayDistance = 0.6f;
+    public LayerMask groundLayer;
+    public float baseJumpPower = 12f;
+    public float maxJumpPower = 22f;
+    public float maxJumpTime = 0.5f;
+    public float jumpCooldown = 0.2f;
 
-    private IEnumerator OnTriggerEnter(Collider other)
+    private float jumpTimer = 0f;
+    private bool floor = false;
+    private bool isCharging;
+
+    void FixedUpdate()
     {
-        if (other.CompareTag("Floor") && floor == null)
+        jumpTimer += Time.fixedDeltaTime;
+        if (isCharging || floor || jumpTimer < jumpCooldown) return;
+
+        Ray ray = new Ray(pogoTipOrigin.position, -transform.up);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, rayDistance, groundLayer))
         {
-            floor = other.gameObject;
+            StartCoroutine(HandleBounceSequence());
+        }
+    }
 
-            float momentum = playerController.rb.linearVelocity.magnitude;
+    private IEnumerator HandleBounceSequence()
+    {
+        isCharging = true;
+        floor = true;
+        jumpTimer = 0;
 
-            //Debug.Log(momentum);
+        float momentum = Mathf.Clamp(rb.linearVelocity.magnitude, 0f, 15f);
+        if (momentum < 0.8f) momentum = 0f;
 
-            playerController.rb.linearVelocity = Vector3.zero;
-            playerController.rb.angularVelocity = Vector3.zero;
-            yield return new WaitForSeconds(0.15f); // Wait for a short duration before applying the jump force
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        yield return new WaitForSeconds(0.12f);
 
-            playerController.rb.AddForce(transform.up * playerController.baseJumpPower, ForceMode.Impulse);
+        float finalJumpPower = baseJumpPower;
 
-            floor = null;
+        if (controller.jumpInput)                                       // SuperJump
+        {
+            float chargeTimer = 0f;
+            while (controller.jumpInput && chargeTimer < maxJumpTime)
+            {
+                chargeTimer += Time.deltaTime;
+                rb.linearVelocity = Vector3.zero;
+
+                finalJumpPower = Mathf.Lerp(baseJumpPower, maxJumpPower, chargeTimer / maxJumpTime);
+                yield return null;
+            }
+
+            float addedMomentumForce = momentum / 3f;
+            rb.AddForce(transform.up * (finalJumpPower + addedMomentumForce), ForceMode.VelocityChange);
+        }
+        else                                                           //Normal Jump
+        {
+            float addedMomentumForce = momentum / 10f;
+            rb.AddForce(transform.up * (baseJumpPower + addedMomentumForce), ForceMode.VelocityChange);
         }
 
-        yield return null;
+        floor = false;
+        isCharging = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (pogoTipOrigin == null) return;
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawRay(pogoTipOrigin.position, -transform.up * rayDistance);
     }
 }

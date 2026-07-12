@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
     public Spring spring;
 
     [Header("Movement Settings")]
-    public float baseJumpPower;
     public float rotSpeed;
 
     private InputAction rotateLeftAction;
@@ -24,10 +23,13 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public float rotRightInput;
     [HideInInspector] public bool jumpInput;
 
+    float noInputTime;
+
     // Update is called once per frame
     void Update()
     {
         Rotate();
+        AutoTurn();
     }
 
     void Rotate()
@@ -37,6 +39,17 @@ public class PlayerController : MonoBehaviour
         float rotationAmount = (rotLeftInput - rotRightInput) * rotSpeed * Time.deltaTime;
 
         transform.Rotate(0f, 0f, rotationAmount);
+    }
+
+    private void AutoTurn()
+    {
+        if (rotLeftInput == 0 && rotRightInput == 0 && !jumpInput) noInputTime += Time.deltaTime;
+        else noInputTime = 0f;
+
+        if (noInputTime >= 2f && Mathf.Abs(transform.rotation.z) < 0.18)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.identity, rotSpeed/10 * Time.deltaTime);
+        }
     }
 
     #region Input
