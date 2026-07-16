@@ -504,8 +504,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  baseJumpPower: 6
-  maxJumpPower: 13
+  baseJumpPower: 5
+  maxJumpPower: 11
   maxJumpTime: 1
   jumpCooldown: 0.25
 --- !u!1 &519420028

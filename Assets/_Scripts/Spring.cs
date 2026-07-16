@@ -44,7 +44,7 @@ public class Spring : MonoBehaviour
         isCharging = true;
         floor = true;
 
-        float momentum = Mathf.Clamp(rb.linearVelocity.magnitude, 0f, 15f);
+        float momentum = Mathf.Clamp(rb.linearVelocity.magnitude, 0f, 6f);
         if (momentum < 0.8f) momentum = 0f;
 
         rb.linearVelocity = Vector3.zero;
@@ -67,12 +67,12 @@ public class Spring : MonoBehaviour
                 yield return null;
             }
 
-            float addedMomentumForce = momentum / 2f;
+            float addedMomentumForce = momentum / 3f;
             rb.AddForce(transform.up * (finalJumpPower + momentum), ForceMode.VelocityChange);
         }
         else                                                           //Normal Jump
         {
-            float addedMomentumForce = momentum / 6f;
+            float addedMomentumForce = momentum / 8f;
             rb.AddForce(transform.up * (baseJumpPower + addedMomentumForce), ForceMode.VelocityChange);
         }
 
