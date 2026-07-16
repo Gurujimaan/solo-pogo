@@ -38,7 +38,8 @@ public class PlayerController : MonoBehaviour
 
         float rotationAmount = (rotLeftInput - rotRightInput) * rotSpeed * Time.deltaTime;
 
-        transform.Rotate(0f, 0f, rotationAmount);
+        //transform.Rotate(0f, 0f, rotationAmount);
+        transform.RotateAround(spring.pivotPoint.position, Vector3.forward, rotationAmount);
     }
 
     private void AutoTurn()

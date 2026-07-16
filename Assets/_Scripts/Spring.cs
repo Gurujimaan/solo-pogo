@@ -6,7 +6,8 @@ public class Spring : MonoBehaviour
     [Header("References")]
     public Rigidbody rb;
     public PlayerController controller;
-    public Transform pogoTipOrigin; 
+    public Transform pogoTipOrigin;
+    public Transform pivotPoint;
 
     [Header("Bounce Settings")]
     public float rayDistance = 0.6f;
@@ -27,18 +28,21 @@ public class Spring : MonoBehaviour
 
         Ray ray = new Ray(pogoTipOrigin.position, -transform.up);
         RaycastHit hit;
+        
 
         if (Physics.Raycast(ray, out hit, rayDistance, groundLayer))
         {
-            StartCoroutine(HandleBounceSequence());
+            Vector2 normal = hit.normal;
+            pivotPoint.position = hit.point;
+            StartCoroutine(HandleBounceSequence(normal));
         }
+        else pivotPoint.position = transform.position;
     }
 
-    private IEnumerator HandleBounceSequence()
+    private IEnumerator HandleBounceSequence(Vector2 normal)
     {
         isCharging = true;
         floor = true;
-        jumpTimer = 0;
 
         float momentum = Mathf.Clamp(rb.linearVelocity.magnitude, 0f, 15f);
         if (momentum < 0.8f) momentum = 0f;
@@ -52,24 +56,27 @@ public class Spring : MonoBehaviour
         if (controller.jumpInput)                                       // SuperJump
         {
             float chargeTimer = 0f;
-            while (controller.jumpInput && chargeTimer < maxJumpTime)
+            float angle = Vector3.Angle(normal, transform.up);
+            while (controller.jumpInput && chargeTimer < maxJumpTime && angle < 60f)
             {
                 chargeTimer += Time.deltaTime;
                 rb.linearVelocity = Vector3.zero;
+                angle = Vector3.Angle(normal, transform.up);
 
                 finalJumpPower = Mathf.Lerp(baseJumpPower, maxJumpPower, chargeTimer / maxJumpTime);
                 yield return null;
             }
 
-            float addedMomentumForce = momentum / 3f;
-            rb.AddForce(transform.up * (finalJumpPower + addedMomentumForce), ForceMode.VelocityChange);
+            float addedMomentumForce = momentum / 2f;
+            rb.AddForce(transform.up * (finalJumpPower + momentum), ForceMode.VelocityChange);
         }
         else                                                           //Normal Jump
         {
-            float addedMomentumForce = momentum / 10f;
+            float addedMomentumForce = momentum / 6f;
             rb.AddForce(transform.up * (baseJumpPower + addedMomentumForce), ForceMode.VelocityChange);
         }
 
+        jumpTimer = 0;
         floor = false;
         isCharging = false;
     }
