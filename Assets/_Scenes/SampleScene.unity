@@ -294,15 +294,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 314185780}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.18779331, w: 0.98220855}
+  m_LocalPosition: {x: -4.84, y: 9.43, z: 0}
   m_LocalScale: {x: 0.84, y: 0.72, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1432222490}
   - {fileID: 276429845}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -21.648}
 --- !u!54 &314185785
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -403,7 +403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76282f5e8982e66458c75645f55ecf25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Head
-  playerController: {fileID: 314185786}
+  spring: {fileID: 314185792}
 --- !u!23 &314185789
 MeshRenderer:
   m_ObjectHideFlags: 0
