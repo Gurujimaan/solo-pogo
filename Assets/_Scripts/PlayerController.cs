@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
     public Rigidbody rb;
+    public Animator anim;
     public PlayerInput playerInput;
     public Spring spring;
 

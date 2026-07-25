@@ -6,11 +6,12 @@ public class Spring : MonoBehaviour
     [Header("References")]
     public Rigidbody rb;
     public PlayerController controller;
+    public Animator anim;
     public Transform pogoTipOrigin;
     public Transform pivotPoint;
 
     [Header("Bounce Settings")]
-    public float rayDistance = 0.6f;
+    public float rayDistance = 0.4f;
     public LayerMask groundLayer;
     public float baseJumpPower = 12f;
     public float maxJumpPower = 22f;
@@ -43,6 +44,7 @@ public class Spring : MonoBehaviour
     {
         isCharging = true;
         floor = true;
+        anim.Play("Jumping", 0, 0f);
 
         float momentum = Mathf.Clamp(rb.linearVelocity.magnitude, 0f, 6f);
         if (momentum < 0.8f) momentum = 0f;
@@ -75,11 +77,22 @@ public class Spring : MonoBehaviour
             float addedMomentumForce = momentum / 8f;
             rb.AddForce(transform.up * (baseJumpPower + addedMomentumForce), ForceMode.VelocityChange);
         }
-
         jumpTimer = 0;
         floor = false;
         isCharging = false;
+        anim.Play("Release", 0, 0f);
     }
+
+    private IEnumerator HandleReleaseSequence()
+    {
+        anim.Play("Release", 0, 0f);
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        float durationInSeconds = stateInfo.length;
+        Debug.Log(stateInfo.length);
+        yield return new WaitForSeconds(durationInSeconds);
+        anim.Play("Idle", 0, 0f);
+    }
+
 
     private void OnDrawGizmos()
     {
