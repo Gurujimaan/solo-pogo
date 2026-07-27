@@ -9,6 +9,7 @@ public class Spring : MonoBehaviour
     public Animator anim;
     public Transform pogoTipOrigin;
     public Transform pivotPoint;
+    public ParticleSystem jumpParticle;
 
     [Header("Bounce Settings")]
     public float rayDistance = 0.4f;
@@ -71,6 +72,7 @@ public class Spring : MonoBehaviour
 
             float addedMomentumForce = momentum / 3f;
             rb.AddForce(transform.up * (finalJumpPower + momentum), ForceMode.VelocityChange);
+            jumpParticle.Play();
         }
         else                                                           //Normal Jump
         {
