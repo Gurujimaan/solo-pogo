@@ -21,80 +21,87 @@ public class Spring : MonoBehaviour
 
     private float jumpTimer = 0f;
     private bool floor = false;
-    private bool isCharging;
+    [HideInInspector] public bool isCharging;
+
+    void Update()
+    {
+        jumpTimer += Time.deltaTime;
+    }
 
     void FixedUpdate()
     {
-        jumpTimer += Time.fixedDeltaTime;
         if (isCharging || floor || jumpTimer < jumpCooldown) return;
 
+        float predictiveDistance = rayDistance + rb.linearVelocity.magnitude * Time.fixedDeltaTime;
         Ray ray = new Ray(pogoTipOrigin.position, -transform.up);
-        RaycastHit hit;
-        
 
-        if (Physics.Raycast(ray, out hit, rayDistance, groundLayer))
+        if (Physics.Raycast(ray, out RaycastHit hit, predictiveDistance, groundLayer))
         {
-            Vector2 normal = hit.normal;
             pivotPoint.position = hit.point;
-            StartCoroutine(HandleBounceSequence(normal));
+            StartCoroutine(HandleBounceSequence(hit));
         }
-        else pivotPoint.position = transform.position;
+        else
+        {
+            pivotPoint.position = transform.position;
+        }
     }
 
-    private IEnumerator HandleBounceSequence(Vector2 normal)
+    private IEnumerator HandleBounceSequence(RaycastHit hit)
     {
-        isCharging = true;
+        Vector2 normal = hit.normal;
         floor = true;
-        anim.Play("Jumping", 0, 0f);
+        isCharging = true;
+
+        if (anim != null) anim.Play("Jumping", 0, 0f);
 
         float momentum = Mathf.Clamp(rb.linearVelocity.magnitude, 0f, 6f);
         if (momentum < 0.8f) momentum = 0f;
 
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        yield return new WaitForSeconds(0.12f);
 
+        if (hit.distance > rayDistance)
+        {
+            rb.MovePosition(hit.point + (transform.up * rayDistance * 2));
+        }
         float finalJumpPower = baseJumpPower;
 
-        if (controller.jumpInput)                                       // SuperJump
+        if (controller != null && controller.jumpInput) // SuperJump
         {
             float chargeTimer = 0f;
             float angle = Vector3.Angle(normal, transform.up);
+            rb.linearVelocity = Vector3.zero;
+            rb.useGravity = false;
+
             while (controller.jumpInput && chargeTimer < maxJumpTime && angle < 60f)
             {
                 chargeTimer += Time.deltaTime;
-                rb.linearVelocity = Vector3.zero;
                 angle = Vector3.Angle(normal, transform.up);
+
+                rb.MovePosition(rb.position - (transform.up * Time.deltaTime) * 0.25f);
 
                 finalJumpPower = Mathf.Lerp(baseJumpPower, maxJumpPower, chargeTimer / maxJumpTime);
                 yield return null;
             }
 
+            rb.useGravity = true;
             float addedMomentumForce = momentum / 3f;
-            rb.AddForce(transform.up * (finalJumpPower + momentum), ForceMode.VelocityChange);
-            jumpParticle.Play();
+            rb.AddForce(transform.up * (finalJumpPower + addedMomentumForce), ForceMode.VelocityChange);
+
+            if (jumpParticle != null) jumpParticle.Play();
         }
-        else                                                           //Normal Jump
+        else // Normal Jump
         {
-            float addedMomentumForce = momentum / 8f;
-            rb.AddForce(transform.up * (baseJumpPower + addedMomentumForce), ForceMode.VelocityChange);
+            yield return new WaitForSeconds(0.15f);
+            rb.AddForce(transform.up * baseJumpPower, ForceMode.VelocityChange);
         }
-        jumpTimer = 0;
+
+        jumpTimer = 0f;
         floor = false;
         isCharging = false;
-        anim.Play("Release", 0, 0f);
-    }
 
-    private IEnumerator HandleReleaseSequence()
-    {
-        anim.Play("Release", 0, 0f);
-        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-        float durationInSeconds = stateInfo.length;
-        Debug.Log(stateInfo.length);
-        yield return new WaitForSeconds(durationInSeconds);
-        anim.Play("Idle", 0, 0f);
+        if (anim != null) anim.Play("Release", 0, 0f);
     }
-
 
     private void OnDrawGizmos()
     {

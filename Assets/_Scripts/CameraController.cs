@@ -6,33 +6,53 @@ public class CameraController : MonoBehaviour
     public GameObject player;
 
     [Header("Settings")]
+    [Tooltip("The total horizontal width of your playable area in Unity units (wall to wall).")]
+    [SerializeField] private float targetWidth = 10f;
     public float followSpeed = 2f;
     public Vector3 offset;
-    public float size = 6f;
-    public float fullSize = 10f;
-    public float zoomSpeed = 2f;
-    public float zoomReqSpeed = 2f;    //Player speed needed to zoom out
 
     private Rigidbody playerRb;
+    private Camera cam;
+
+    private void Awake()
+    {
+        cam = GetComponent<Camera>();
+        UpdateCameraSize();
+    }
 
     void Start()
     {
         playerRb = player.GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
+    private void Update()
+    {
+        #if UNITY_EDITOR
+        // Recalculates dynamically when resizing the Game view window in Editor
+        UpdateCameraSize();
+        #endif
+    }
+
+    public void UpdateCameraSize()
+    {
+        if (cam == null) cam = GetComponent<Camera>();
+
+        // Ensure camera is in Orthographic mode (2D)
+        if (!cam.orthographic)
+        {
+            cam.orthographic = true;
+        }
+
+        // Calculate size needed to keep horizontal width fixed
+        float unitsPerPixel = targetWidth / Screen.width;
+        float desiredHalfHeight = 0.5f * unitsPerPixel * Screen.height;
+
+        cam.orthographicSize = desiredHalfHeight;
+    }
+
     void FixedUpdate()
     {
         Vector3 targetPosition = player.transform.position + offset;
         transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.fixedDeltaTime);
-
-        if(playerRb.linearVelocity.magnitude > zoomReqSpeed)
-        {
-            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, fullSize, zoomSpeed * Time.fixedDeltaTime);
-        }
-        else
-        {
-            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, size, zoomSpeed * Time.fixedDeltaTime);
-        }
     }
 }

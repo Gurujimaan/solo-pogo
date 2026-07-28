@@ -4,9 +4,12 @@ public class Head : MonoBehaviour
 {
     [Header("References")]
     public Spring spring;
+    public Collider headCollider;
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (spring.isCharging) return;
+
         if (collision.gameObject.layer == 7)
         {
             Collider myColliderThatHit = collision.contacts[0].thisCollider;
@@ -18,7 +21,7 @@ public class Head : MonoBehaviour
 
             spring.rb.linearVelocity = Vector3.zero;
             spring.rb.angularVelocity = Vector3.zero;
-            spring.rb.AddForce(bounceDirection * 3, ForceMode.Impulse);
+            spring.rb.AddForce(bounceDirection * 1.5f, ForceMode.Impulse);
         }
     }
 }
