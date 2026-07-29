@@ -53,6 +53,8 @@ public class CameraController : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 targetPosition = player.transform.position + offset;
-        transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.fixedDeltaTime);
+
+        if(Mathf.Abs(targetPosition.magnitude - transform.position.magnitude) > 0.5f) 
+            transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.fixedDeltaTime);
     }
 }
