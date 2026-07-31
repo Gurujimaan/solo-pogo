@@ -13,7 +13,8 @@ public class Spring : MonoBehaviour
 
     [Header("Bounce Settings")]
     public float rayDistance = 0.4f;
-    public LayerMask groundLayer;
+    public LayerMask floorLayer;
+    public LayerMask falseFloorLayer;
     public float baseJumpPower = 12f;
     public float maxJumpPower = 22f;
     public float maxJumpTime = 0.5f;
@@ -22,6 +23,7 @@ public class Spring : MonoBehaviour
     private float jumpTimer = 0f;
     private bool floor = false;
     [HideInInspector] public bool isCharging;
+    private LayerMask groundLayer;
 
     void Update()
     {
@@ -34,6 +36,11 @@ public class Spring : MonoBehaviour
 
         float predictiveDistance = rayDistance + rb.linearVelocity.magnitude * Time.fixedDeltaTime;
         Ray ray = new Ray(pogoTipOrigin.position, -transform.up);
+
+        if (rb.linearVelocity.y > 0)
+            groundLayer = floorLayer;
+        else 
+            groundLayer = falseFloorLayer;
 
         if (Physics.Raycast(ray, out RaycastHit hit, predictiveDistance, groundLayer))
         {
@@ -78,7 +85,7 @@ public class Spring : MonoBehaviour
                 chargeTimer += Time.deltaTime;
                 angle = Vector3.Angle(normal, transform.up);
 
-                rb.MovePosition(rb.position - (transform.up * Time.deltaTime) * 0.25f);
+                rb.MovePosition(rb.position - (transform.up * Time.deltaTime) * 0.15f);
 
                 finalJumpPower = Mathf.Lerp(baseJumpPower, maxJumpPower, chargeTimer / maxJumpTime);
                 yield return null;

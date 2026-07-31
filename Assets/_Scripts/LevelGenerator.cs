@@ -8,6 +8,7 @@ public class LevelGenerator : MonoBehaviour
 
     [Header("Level Generation Settings")]
     public List<GameObject> tilePrefabs; // List of manual tower section prefabs
+    public float currentSpawnY = 10f;
     public float sectionHeight = 10f;    // Vertical height of each tile section
     public int initialPoolSize = 10;     // How many total sections to keep warm in memory
     public float renderAheadDistance = 40f; // How far above player to spawn chunks
@@ -16,7 +17,7 @@ public class LevelGenerator : MonoBehaviour
     // Pooling & Active Trackers
     private List<GameObject> pool = new List<GameObject>();
     private List<GameObject> activeSections = new List<GameObject>();
-    private float currentSpawnY = 0f;
+
 
     void Start()
     {

@@ -91,8 +91,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.15
-  m_Height: 0.75
+  m_Radius: 0.13
+  m_Height: 0.65
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5431712042002260957
@@ -114,7 +114,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -194,7 +194,8 @@ MonoBehaviour:
   anim: {fileID: 6359292680363388776}
   playerInput: {fileID: 7466349925744897937}
   spring: {fileID: 4662217835994759821}
-  rotSpeed: 200
+  rotSpeed: 180
+  airRotSpeed: 300
   rotLeftInput: 0
   rotRightInput: 0
   jumpInput: 0
@@ -216,13 +217,16 @@ MonoBehaviour:
   pogoTipOrigin: {fileID: 769302089799943902}
   pivotPoint: {fileID: 5162532064980540051}
   jumpParticle: {fileID: 2790441602944627211}
-  rayDistance: 0.25
-  groundLayer:
+  rayDistance: 0.22
+  floorLayer:
     serializedVersion: 2
     m_Bits: 128
-  baseJumpPower: 4.5
-  maxJumpPower: 8
-  maxJumpTime: 1
+  falseFloorLayer:
+    serializedVersion: 2
+    m_Bits: 384
+  baseJumpPower: 5
+  maxJumpPower: 9
+  maxJumpTime: 1.3
   jumpCooldown: 0.25
   isCharging: 0
 --- !u!1 &4878921899466754989

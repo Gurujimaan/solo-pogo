@@ -50,11 +50,13 @@ public class CameraController : MonoBehaviour
         cam.orthographicSize = desiredHalfHeight;
     }
 
+    private Vector3 targetPosition;
     void FixedUpdate()
     {
-        Vector3 targetPosition = player.transform.position + offset;
+        targetPosition = offset;
+        targetPosition.y += player.transform.position.y;
 
-        if(Mathf.Abs(targetPosition.magnitude - transform.position.magnitude) > 0.5f) 
+        if (Mathf.Abs(targetPosition.magnitude - transform.position.magnitude) > 0.5f) 
             transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.fixedDeltaTime);
     }
 }

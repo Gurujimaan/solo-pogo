@@ -21,7 +21,7 @@ public class Head : MonoBehaviour
 
             spring.rb.linearVelocity = Vector3.zero;
             spring.rb.angularVelocity = Vector3.zero;
-            spring.rb.AddForce(bounceDirection * 1.5f, ForceMode.Impulse);
+            spring.rb.AddForce(bounceDirection , ForceMode.Impulse);
         }
     }
 }
