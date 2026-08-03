@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour
     [Header("Settings")]
     [Tooltip("The total horizontal width of your playable area in Unity units (wall to wall).")]
     [SerializeField] private float targetWidth = 10f;
+    public float minHeight = 5f;
     public float followSpeed = 2f;
     public Vector3 offset;
 
@@ -53,8 +54,11 @@ public class CameraController : MonoBehaviour
     private Vector3 targetPosition;
     void FixedUpdate()
     {
+        if(player == null) return;
+
         targetPosition = offset;
         targetPosition.y += player.transform.position.y;
+        targetPosition.y = Mathf.Max(targetPosition.y, minHeight);
 
         if (Mathf.Abs(targetPosition.magnitude - transform.position.magnitude) > 0.5f) 
             transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.fixedDeltaTime);
