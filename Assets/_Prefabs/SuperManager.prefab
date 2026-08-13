@@ -49,7 +49,7 @@ MonoBehaviour:
   player: {fileID: 0}
   risingAcid: {fileID: 0}
   scoreManager: {fileID: 2595383291229112900}
-  acidHeightReq: 3
+  acidHeightReq: 8
 --- !u!114 &7789561108330779514
 MonoBehaviour:
   m_ObjectHideFlags: 0
