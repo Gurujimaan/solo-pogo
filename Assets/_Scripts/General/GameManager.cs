@@ -14,17 +14,19 @@ public class GameManager : Singleton<GameManager>
     private float height;
     private bool gameStarted = false;
 
+
     private void Start()
     {
         StartGame();
     }
+
 
     void Update()
     {
         if(gameStarted)
         {
             height = player.transform.position.y;
-            scoreManager.UpdateScore(height);
+            scoreManager.UpdateScore((int)height);
 
             if(height > acidHeightReq)
             {
@@ -37,8 +39,9 @@ public class GameManager : Singleton<GameManager>
     public void StartGame()
     {
         gameStarted = true;
-        risingAcid.isRising = false;
+        risingAcid.ResetAcid(); 
         scoreManager.ResetScore();
+        scoreManager.LoadHighScore();
         height = 0;
     }
 

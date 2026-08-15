@@ -25,4 +25,11 @@ public class RisingAcid : MonoBehaviour
             GameManager.Instance.PlayerDeath();
         }
     }
+
+
+    public void ResetAcid()
+    {
+        isRising = false;
+        transform.position = new Vector3(transform.position.x, -7, transform.position.z);
+    }
 }
