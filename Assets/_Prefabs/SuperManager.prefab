@@ -49,7 +49,7 @@ MonoBehaviour:
   player: {fileID: 0}
   risingAcid: {fileID: 0}
   scoreManager: {fileID: 2595383291229112900}
-  acidHeightReq: 8
+  acidHeightReq: 3
 --- !u!114 &7789561108330779514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,6 +70,8 @@ MonoBehaviour:
   initialPoolSize: 10
   renderAheadDistance: 30
   despawnDistance: 20
+  bgPrefabs:
+  - {fileID: 5215354811097666058, guid: 400a3548952cf0344874c588a6ffd1d1, type: 3}
 --- !u!114 &2595383291229112900
 MonoBehaviour:
   m_ObjectHideFlags: 0

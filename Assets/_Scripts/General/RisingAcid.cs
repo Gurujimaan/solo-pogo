@@ -6,13 +6,25 @@ public class RisingAcid : MonoBehaviour
     public Transform player;
 
     [Header("Rising Settings")]
-    public float riseSpeed = 0.5f;
+    private float riseSpeed = 0.5f;
+    public float baseRiseSpeed = 0.5f;
+    public float fastRiseDistance = 5.0f;
     public bool isRising = false;
 
 
     void FixedUpdate()
     {
         if (!isRising) return;
+
+        if (player.position.y - transform.position.y > fastRiseDistance)
+        {
+            riseSpeed += 0.5f;
+        }
+        else
+        {
+            riseSpeed = baseRiseSpeed;
+        }
+
 
         transform.position += Vector3.up * riseSpeed * Time.fixedDeltaTime;
     }

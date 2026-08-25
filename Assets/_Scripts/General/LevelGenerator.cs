@@ -14,17 +14,23 @@ public class LevelGenerator : MonoBehaviour
     public float renderAheadDistance = 40f; // How far above player to spawn chunks
     public float despawnDistance = 20f;     // How far below player to recycle chunks
 
+    [Header("Background Generation Settings")]
+    public List<GameObject> bgPrefabs;
+    public int bgTier = 0;
+
     // Pooling & Active Trackers
     private List<GameObject> pool = new List<GameObject>();
     private List<GameObject> activeSections = new List<GameObject>();
 
+    private List<GameObject> bgPool = new List<GameObject>();
+    private List<GameObject> activeBackgrounds = new List<GameObject>();
 
     void Start()
     {
-        // 2. Initialize the Object Pool disabled off-screen
+        // Initialize pools disabled off-screen
         InitializePool();
 
-        // 3. Build initial stack around start position
+        // Build initial stack around start position
         while (currentSpawnY < renderAheadDistance)
         {
             SpawnNextSection();
@@ -41,7 +47,7 @@ public class LevelGenerator : MonoBehaviour
             SpawnNextSection();
         }
 
-        // Recycle sections far below the player
+        // Recycle sections and backgrounds far below the player
         RecycleOldSections();
     }
 
@@ -49,31 +55,43 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int i = 0; i < initialPoolSize; i++)
         {
-            // Pick a random section prefab to pre-warm
             GameObject prefab = tilePrefabs[Random.Range(0, tilePrefabs.Count)];
             GameObject obj = Instantiate(prefab, Vector3.zero, Quaternion.identity, transform);
             obj.SetActive(false);
             pool.Add(obj);
+
+            GameObject bgPrefab = bgPrefabs[bgTier];
+            GameObject bgObj = Instantiate(bgPrefab, Vector3.zero, Quaternion.identity, transform);
+            bgObj.SetActive(false);
+            bgPool.Add(bgObj);
         }
     }
 
     private void SpawnNextSection()
     {
         GameObject sectionToSpawn = GetPooledObject();
+        GameObject bgToSpawn = GetPooledBgObject();
 
         if (sectionToSpawn != null)
         {
             sectionToSpawn.transform.position = new Vector3(0, currentSpawnY, 0);
             sectionToSpawn.SetActive(true);
-
             activeSections.Add(sectionToSpawn);
-            currentSpawnY += sectionHeight;
         }
+
+        if (bgToSpawn != null)
+        {
+            Debug.Log("nope");
+            bgToSpawn.transform.position = new Vector3(0, currentSpawnY, 0);
+            bgToSpawn.SetActive(true);
+            activeBackgrounds.Add(bgToSpawn);
+        }
+
+        currentSpawnY += sectionHeight;
     }
 
     private GameObject GetPooledObject()
     {
-        // Find an inactive object in the pool
         foreach (GameObject obj in pool)
         {
             if (!obj.activeInHierarchy)
@@ -82,7 +100,7 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        // Expansion fallback: If player climbs faster than pool size, expand pool smoothly
+        // Expansion fallback
         GameObject extraPrefab = tilePrefabs[Random.Range(0, tilePrefabs.Count)];
         GameObject newObj = Instantiate(extraPrefab, Vector3.zero, Quaternion.identity, transform);
         newObj.SetActive(false);
@@ -90,17 +108,47 @@ public class LevelGenerator : MonoBehaviour
         return newObj;
     }
 
+    private GameObject GetPooledBgObject()
+    {
+        foreach (GameObject obj in bgPool)
+        {
+            if (!obj.activeInHierarchy)
+            {
+                return obj;
+            }
+        }
+
+        // Expansion fallback using bgTier index
+        GameObject bgPrefab = bgPrefabs[bgTier];
+        GameObject newBgObj = Instantiate(bgPrefab, Vector3.zero, Quaternion.identity, transform);
+        newBgObj.SetActive(false);
+        bgPool.Add(newBgObj);
+        return newBgObj;
+    }
+
     private void RecycleOldSections()
     {
+        float despawnThreshold = playerTransform.position.y - despawnDistance;
+
+        // Recycle tile sections
         for (int i = activeSections.Count - 1; i >= 0; i--)
         {
             GameObject section = activeSections[i];
-
-            // Check if section center is below player despawn threshold
-            if (section.transform.position.y < playerTransform.position.y - despawnDistance)
+            if (section.transform.position.y < despawnThreshold)
             {
                 section.SetActive(false);
                 activeSections.RemoveAt(i);
+            }
+        }
+
+        // Recycle background sections
+        for (int i = activeBackgrounds.Count - 1; i >= 0; i--)
+        {
+            GameObject bg = activeBackgrounds[i];
+            if (bg.transform.position.y < despawnThreshold)
+            {
+                bg.SetActive(false);
+                activeBackgrounds.RemoveAt(i);
             }
         }
     }
