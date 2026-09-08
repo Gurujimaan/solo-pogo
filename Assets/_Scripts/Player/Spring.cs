@@ -80,7 +80,7 @@ public class Spring : MonoBehaviour
             rb.linearVelocity = Vector3.zero;
             rb.useGravity = false;
 
-            while (controller.jumpInput && chargeTimer < maxJumpTime && angle < 60f)
+            while (controller.jumpInput && chargeTimer < maxJumpTime && angle < 70f)
             {
                 chargeTimer += Time.deltaTime;
                 angle = Vector3.Angle(normal, transform.up);

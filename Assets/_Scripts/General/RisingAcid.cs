@@ -18,13 +18,12 @@ public class RisingAcid : MonoBehaviour
 
         if (player.position.y - transform.position.y > fastRiseDistance)
         {
-            riseSpeed += 0.5f;
+            riseSpeed += 0.1f;
         }
         else
         {
             riseSpeed = baseRiseSpeed;
         }
-
 
         transform.position += Vector3.up * riseSpeed * Time.fixedDeltaTime;
     }
