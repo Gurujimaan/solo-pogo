@@ -1,16 +1,25 @@
 fileFormatVersion: 2
-guid: 7b9881796ad1ab446a8d7d39685faa16
+guid: b7b3b85323671fa4daf626126ade89b9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2543846436268932243
-    second: Jump Particles-Sheet_0
+      213: 8645812216777000498
+    second: Game UI 2_0
   - first:
-      213: -1661617082781573334
-    second: Jump Particles-Sheet_1
+      213: 6328708381329350743
+    second: Game UI 2_1
   - first:
-      213: -6655186099663273838
-    second: Jump Particles-Sheet_2
+      213: -979656941872174992
+    second: Game UI 2_2
+  - first:
+      213: -6103701064284985120
+    second: Game UI 2_3
+  - first:
+      213: -5682778065298157660
+    second: Game UI 2_4
+  - first:
+      213: -1226677365641818062
+    second: Game UI 2_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -57,7 +66,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -132,111 +141,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Jump Particles-Sheet_0
+      name: Game UI 2_0
       rect:
         serializedVersion: 2
-        x: 28
-        y: 112
-        width: 8
-        height: 2
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 39cf3fc1bde8d4320800000000000000
-      internalID: 2543846436268932243
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Jump Particles-Sheet_1
-      rect:
-        serializedVersion: 2
-        x: 339
-        y: 112
-        width: 23
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a2f551c1110c0f8e0800000000000000
-      internalID: -1661617082781573334
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Jump Particles-Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 495
-        y: 114
-        width: 31
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2900477c08704a3a0800000000000000
-      internalID: -6655186099663273838
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Jump Particles-Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 185
-        y: 112
-        width: 15
-        height: 3
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3e354402bbb6797479c3e0137c15dba9
-      internalID: 614314264
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Jump Particles-Sheet_4
-      rect:
-        serializedVersion: 2
-        x: 653
-        y: 115
+        x: 99
+        y: 491
         width: 35
-        height: 4
+        height: 26
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: a19f1c35946ac484089307ae24f30b6a
-      internalID: 414285585
+      spriteID: 236c9b757681cf770800000000000000
+      internalID: 8645812216777000498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game UI 2_1
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 491
+        width: 35
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7506c2cedb614d750800000000000000
+      internalID: 6328708381329350743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game UI 2_2
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 485
+        width: 32
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 078a6f9a33f8762f0800000000000000
+      internalID: -979656941872174992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game UI 2_3
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 496
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e8ae18883c4b4ba0800000000000000
+      internalID: -6103701064284985120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game UI 2_5
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 493
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23058e66f67f9fee0800000000000000
+      internalID: -1226677365641818062
       vertices: []
       indices: 
       edges: []
@@ -245,7 +254,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e31f5d5f21802874188fe040f15881df
+    spriteID: cb2763cebba158e44b7f99faa53b2a72
     internalID: 0
     vertices: []
     indices: 
@@ -255,11 +264,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Jump Particles-Sheet_0: 2543846436268932243
-      Jump Particles-Sheet_1: -1661617082781573334
-      Jump Particles-Sheet_2: -6655186099663273838
-      Jump Particles-Sheet_3: 614314264
-      Jump Particles-Sheet_4: 414285585
+      Game UI 2_0: 8645812216777000498
+      Game UI 2_1: 6328708381329350743
+      Game UI 2_2: -979656941872174992
+      Game UI 2_3: -6103701064284985120
+      Game UI 2_4: -5682778065298157660
+      Game UI 2_5: -1226677365641818062
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

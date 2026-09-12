@@ -80,8 +80,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         if (bgToSpawn != null)
-        {
-            Debug.Log("nope");
+        {   
             bgToSpawn.transform.position = new Vector3(0, currentSpawnY, 0);
             bgToSpawn.SetActive(true);
             activeBackgrounds.Add(bgToSpawn);

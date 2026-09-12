@@ -21,7 +21,7 @@ public class GameManager : Singleton<GameManager>
     }
 
 
-    void Update()
+    void Update()                //Check when to start rising the acid
     {
         if(gameStarted)
         {
@@ -36,7 +36,7 @@ public class GameManager : Singleton<GameManager>
     }
 
 
-    public void StartGame()
+    public void StartGame()         //Reset Score UI
     {
         gameStarted = true;
         risingAcid.ResetAcid(); 
