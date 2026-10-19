@@ -49,7 +49,9 @@ MonoBehaviour:
   player: {fileID: 0}
   risingAcid: {fileID: 0}
   scoreManager: {fileID: 2595383291229112900}
-  acidHeightReq: 3
+  levelGenerator: {fileID: 7789561108330779514}
+  acidHeightReq: 10
+  playerAcidGap: 14
 --- !u!114 &7789561108330779514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,15 +65,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelGenerator
   playerTransform: {fileID: 0}
-  tilePrefabs:
+  tilePrefabsTier0:
   - {fileID: 2146664022222909006, guid: b36a98a83a9e96f41b6143396e96ee11, type: 3}
+  tilePrefabsTier1: []
+  tilePrefabsTier2: []
   currentSpawnY: 10
-  sectionHeight: 10
   initialPoolSize: 10
-  renderAheadDistance: 30
-  despawnDistance: 20
+  renderAheadDistance: 40
+  despawnDistance: 30
   bgPrefabs:
+  - {fileID: 5215354811097666058, guid: 6d212cc660ae752459f982df52fbf09e, type: 3}
+  - {fileID: 5215354811097666058, guid: e2e8dbc07adeadf42b852d6cd55c298c, type: 3}
   - {fileID: 5215354811097666058, guid: 400a3548952cf0344874c588a6ffd1d1, type: 3}
+  currentTier: 0
 --- !u!114 &2595383291229112900
 MonoBehaviour:
   m_ObjectHideFlags: 0

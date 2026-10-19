@@ -16,7 +16,11 @@ public class RisingAcid : MonoBehaviour
     {
         if (!isRising) return;
 
-        if (player.position.y - transform.position.y > fastRiseDistance)
+        if (player.position.y - transform.position.y > fastRiseDistance * 2.5f)
+        {
+            riseSpeed += 1;
+        }
+        else if (player.position.y - transform.position.y > fastRiseDistance)
         {
             riseSpeed += 0.1f;
         }

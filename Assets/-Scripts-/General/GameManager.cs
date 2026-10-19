@@ -7,11 +7,13 @@ public class GameManager : Singleton<GameManager>
     public GameObject player;
     public RisingAcid risingAcid;
     public ScoreManager scoreManager;
+    public LevelGenerator levelGenerator;
 
     [Header("Game Settings")]
     public float acidHeightReq = 10;
+    public float playerAcidGap = 14;
 
-    private float height;
+    private float playerHeight;
     private bool gameStarted = false;
 
 
@@ -25,10 +27,10 @@ public class GameManager : Singleton<GameManager>
     {
         if(gameStarted)
         {
-            height = player.transform.position.y;
-            scoreManager.UpdateScore((int)height);
+            playerHeight = player.transform.position.y;
+            scoreManager.UpdateScore((int)playerHeight);
 
-            if(height > acidHeightReq)
+            if(playerHeight > acidHeightReq)
             {
                 risingAcid.isRising = true;
             }
@@ -42,7 +44,7 @@ public class GameManager : Singleton<GameManager>
         risingAcid.ResetAcid(); 
         scoreManager.ResetScore();
         scoreManager.LoadHighScore();
-        height = 0;
+        playerHeight = 0;
     }
 
 

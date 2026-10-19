@@ -7,16 +7,21 @@ public class LevelGenerator : MonoBehaviour
     public Transform playerTransform;
 
     [Header("Level Generation Settings")]
-    public List<GameObject> tilePrefabs; // List of manual tower section prefabs
+    public List<GameObject> tilePrefabsTier0; // List of manual tower section prefabs
+    public List<GameObject> tilePrefabsTier1; 
+    public List<GameObject> tilePrefabsTier2;
     public float currentSpawnY = 10f;
-    public float sectionHeight = 10f;    // Vertical height of each tile section
     public int initialPoolSize = 10;     // How many total sections to keep warm in memory
     public float renderAheadDistance = 40f; // How far above player to spawn chunks
     public float despawnDistance = 20f;     // How far below player to recycle chunks
 
+    private float sectionHeight = 10f;    // Vertical height of each tile section
+    private List<List<GameObject>> tilePrefabs; // Combined list of all tiers for pooling
+
     [Header("Background Generation Settings")]
     public List<GameObject> bgPrefabs;
-    public int bgTier = 0;
+    public int currentTier = 0;
+    private int bgTier = 0;
 
     // Pooling & Active Trackers
     private List<GameObject> pool = new List<GameObject>();
@@ -27,6 +32,11 @@ public class LevelGenerator : MonoBehaviour
 
     void Start()
     {
+        tilePrefabs = new List<List<GameObject>>();
+        tilePrefabs.Add(tilePrefabsTier0);
+        tilePrefabs.Add(tilePrefabsTier1);
+        tilePrefabs.Add(tilePrefabsTier2);
+
         // Initialize pools disabled off-screen
         InitializePool();
 
@@ -49,18 +59,28 @@ public class LevelGenerator : MonoBehaviour
 
         // Recycle sections and backgrounds far below the player
         RecycleOldSections();
+
+        if(currentSpawnY > 100 && currentTier == 0)
+        {
+            currentTier = 1;
+            bgTier = 1;
+        }
+        else if(currentSpawnY > 200 && currentTier == 1)
+        {
+            currentTier = 2;
+        }
     }
 
     private void InitializePool()
     {
         for (int i = 0; i < initialPoolSize; i++)
         {
-            GameObject prefab = tilePrefabs[Random.Range(0, tilePrefabs.Count)];
+            GameObject prefab = tilePrefabs[currentTier][Random.Range(0, tilePrefabs[currentTier].Count)];
             GameObject obj = Instantiate(prefab, Vector3.zero, Quaternion.identity, transform);
             obj.SetActive(false);
             pool.Add(obj);
 
-            GameObject bgPrefab = bgPrefabs[bgTier];
+            GameObject bgPrefab = bgPrefabs[currentTier];
             GameObject bgObj = Instantiate(bgPrefab, Vector3.zero, Quaternion.identity, transform);
             bgObj.SetActive(false);
             bgPool.Add(bgObj);
@@ -86,6 +106,8 @@ public class LevelGenerator : MonoBehaviour
             activeBackgrounds.Add(bgToSpawn);
         }
 
+        if(bgTier == 1) bgTier = 2; // Switch to bgTier 2 after the first background is spawned
+
         currentSpawnY += sectionHeight;
     }
 
@@ -100,7 +122,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         // Expansion fallback
-        GameObject extraPrefab = tilePrefabs[Random.Range(0, tilePrefabs.Count)];
+        GameObject extraPrefab = tilePrefabs[currentTier][Random.Range(0, tilePrefabs[currentTier].Count)];
         GameObject newObj = Instantiate(extraPrefab, Vector3.zero, Quaternion.identity, transform);
         newObj.SetActive(false);
         pool.Add(newObj);
